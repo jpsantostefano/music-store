@@ -8,6 +8,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    # Chagnes the name Categorys for categories on admin panel
+    class Meta:
+        verbose_name_plural = 'categories'
+
 # Customers
 class Customer(models.Model):
     first_name = models.CharField(max_length=50)
@@ -22,7 +26,7 @@ class Customer(models.Model):
 # All the products
 class Product(models.Model):
     name = models.CharField(max_length=100)
-    price = models.DecimalField(default=0, decimal_places=2, max_digits=6)
+    price = models.DecimalField(default=0, decimal_places=2, max_digits=10)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     description = models.CharField(max_length=250, default='', blank=True, null=True)
     image = models.ImageField(upload_to='uploads/product/')
