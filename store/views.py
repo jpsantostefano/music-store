@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django import forms
 
+
 def category(request, cat):
     try:
         category = Category.objects.get(name=cat)
