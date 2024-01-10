@@ -51,9 +51,12 @@
                           </div>
                     </div>
                           <br>
-                        <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+                        <a href="{% url 'home' %}" class="btn btn-secondary">Keep purchasing</a>
                         <button type="button" data-index="{{product.id}}" class="btn btn-secondary update-cart">
                             Update
+                        </button>
+                        <button type="button" data-index="{{product.id}}" class="btn btn-danger delete-product">
+                            Remove
                         </button>
                         </div>
                     </div>
@@ -90,8 +93,6 @@
       action: 'post'
     },
     success: function(json){
-        //console.log(json)
-        //document.getElementById("cart_quantity").textContent = json.qty
         location.reload();
     },
 
@@ -99,9 +100,34 @@
 
     }
 
+    });
+
+})
+
+    // Delete Item From Cart
+    $(document).on('click', '.delete-product', function(e){
+    e.preventDefault();
+
+    $.ajax({
+    type: 'POST',
+    url: '{% url "cart_delete" %}',
+    data: {
+      product_id: $(this).data('index'),
+      csrfmiddlewaretoken: '{{ csrf_token }}',
+      action: 'post'
+    },
+    success: function(json){
+        location.reload();
+    },
+
+    error: function(xhr, errmsg, err){
+
+    }
 
     });
 
 })
+
+
 </script>
 {% endblock %}
