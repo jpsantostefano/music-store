@@ -1,40 +1,89 @@
 <!-- Navigation-->
+<!-- Top Nav -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
+        <!-- Logo (Left) -->
         <a class="navbar-brand" href="{% url 'home' %}">Music Store</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <!-- Search bar (Middle) -->
+        <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
+            <form class="d-flex">
+                <input class="form-control border border-black rounded-0" type="text" name="q" placeholder="Search our site">
+                <button class="btn btn-black border border-black rounded-0" type="submit">
+                    <span class="icon">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Right -->
+        <div class="ml-auto d-flex">
+            <!-- Account Menu -->
+            <div class="me-2 align-self-center">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% if user.is_authenticated %}
+                        <li class="dropdown-item"><a class="nav-link" href="#">Profile</a></li>
+                        <li class="dropdown-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li class="dropdown-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                        <li class="dropdown-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Cart -->
+            <div class="ms-2 align-self-center">
+                <form>
+                    <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark">
+                        <i class="bi-cart-fill me-1"></i>
+                        Cart
+                        <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Bottom Nav -->
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="d-flex justify-content-center">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
-                {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
-                
-                {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
-
-                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
-                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">All Products</a></li>
+                <!-- Categories Menu-->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{% url 'home' %}">All Products</a></li>
-                        <li><hr class="dropdown-divider" /></li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">  
                         <li><a class="dropdown-item" href="{% url 'category' 'CDs' %}">CDs</a></li>
                         <li><a class="dropdown-item" href="{% url 'category' 'Vinyls' %}">Vinyls</a></li>
                         <li><a class="dropdown-item" href="{% url 'category' 'Instruments' %}">Instruments</a></li>
                     </ul>
                 </li>
-            </ul>
-            <form class="d-flex">
-                <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark">
-                    <i class="bi-cart-fill me-1"></i>
-                    Cart
-                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span>
-                </a>
-
-                
-            </form>
-        </div>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">  
+                        <li><a class="dropdown-item" href="{% url 'about' %}">About</a></li>
+                        <li><a class="dropdown-item" href="#">Blog</a></li>
+                        <li><a class="dropdown-item" href="#">Careers</a></li>
+                    </ul>
+                </li>
+            </ul>   
     </div>
 </nav>
+
+    
+
+
+
+
+
+
+
+
+
+
