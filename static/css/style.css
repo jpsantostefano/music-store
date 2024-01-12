@@ -115,5 +115,23 @@ h1 {
     margin-right: auto;
 }
 
+.img-summary{
+    width: 300px;
+    height: 200px;
+}
 
+.summary-card{
+    display: flex;
+    flex-direction: row;
+    border:2px solid #212529;
+}
 
+.qty-select-container{
+    display: flex;
+    align-items: center;
+}
+
+.qty-select-container p, select, button {
+    margin: 0; 
+    margin-right: 10px;
+}
