@@ -1,0 +1,95 @@
+/******** BODY *********/
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+/******** NAV BAR *********/
+
+nav{
+    background-color: #F8F9FA; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    padding: 13px;
+}
+
+
+.navbar-bot{
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.search-bar{
+    width: 400px;
+}
+
+.nav-middle{
+    flex-grow: 1;
+    text-align: center;
+}
+
+.nav-right{
+    display: flex;
+    align-items: center;
+}
+
+
+/******** HEADER *********/
+
+header {
+    background-color: #212529;
+    text-align: center;
+    color: white;
+    padding: 70px;
+}
+
+header p {
+    color: #90928E;
+}
+
+/******** SECTION *********/
+
+section {
+    padding: 100px 120px 100px 120px;
+}
+
+.home-section{
+    display: flex;
+    justify-content: space-around;
+}
+
+/******** FOOTER *********/
+
+footer {
+    background-color: #212529;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: white;
+}
+
+/******** ELEMENTS *********/
+
+a {
+    text-decoration: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: black;
+}
+
+
+h1 {
+    margin: 0;
+}
+
+/******** OBECTS *********/
+
+
+
