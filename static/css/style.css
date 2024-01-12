@@ -55,12 +55,14 @@ header p {
 /******** SECTION *********/
 
 section {
-    padding: 100px 120px 100px 120px;
+    padding: 15px 120px 100px 120px;
 }
 
 .home-section{
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
+    background-color: #A2A7AA;
 }
 
 /******** FOOTER *********/
@@ -94,6 +96,24 @@ h1 {
 }
 
 /******** OBECTS *********/
+.card {
+    background-color: #ffff;
+    width: 230px;
+    height: 350px;
+    padding: 30px;
+    margin: 40px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card img {
+    width: 140px;
+    height: 125px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 
 
