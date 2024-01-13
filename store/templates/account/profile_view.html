@@ -6,41 +6,39 @@
 <header>
     <div>   
         <h1>Profile</h1>
-        <p>Welcome {{ profile.user.username }}'s to your Profile</p>
+        <p>Welcome to your Profile</p>
     </div>
 </header>
 
-<section>
-    <!-- Information -->
-    <div class="container d-flex justify-content-center">
-        <div class="text-center">
-            <div>
-                <h4>First Name:</h4>
-                <p>{{ profile.first_name }}</p>
+<section class="d-flex justify-content-center align-items-center">
+        <!-- Card -->
+        <div class="profile-card">
+            <div class="d-flex">
+                <!-- Image -->
+                <div class="photo-profile">
+                    <img class="rounded-circle" width="150px" src="{{ profile.image.url }}">
+                    <div><span class="font-weight-bold">{{ profile.user.username }}</span></div>
+                    <div><span class="text-black-50">{{ profile.email }}</span></div>
+                </div>
+                <!-- Information -->
+                <div>
+                    <div><h4>Profile Information</h4></div>
+                    <div><h6>First Name:</h6> {{ profile.first_name }}</div>
+                    <div><h6>Last Name:</h6> {{ profile.last_name }}</div>
+                    <div><h6>Phone Number:</h6></div>
+                    <div><h6>Address Line 1:</div>
+                    <div><h6>Address Line 2:</div>
+                    <div><h6>Town or City:</div>
+                    <div><h6>State/Region:</div>
+                    <div><h6>Country:</div>
+                    <div><h6>Postal Code:</div>                   
+                </div>
             </div>
-            <div>
-                <h4>Last Name:</h4>
-                <p>{{ profile.last_name }}</p>
-            </div>
-            <div>
-                <h4>Instagram:</h4>
-                <p>{{ profile.instagram }}</p>
-            </div>
-            <div>
-                <h4>Email:</h4>
-                <p>{{ profile.email }}</p>
+            <!-- Button -->
+            <div class="d-flex justify-content-center mt-5">
+                <a class="btn btn-outline-dark" href="#">Edit profile</a></button>
             </div>
         </div>
-    </div>
-
-    <div class="labels">
-        <h4>Image: </h4>
-    </div>
-    {% if profile.image %}
-        <img src="{{ profile.image.url }}" width="200px" height="200px">
-    {% endif %}
-    <br>
-    <button class="btn btn-primary btn-lg"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Edit profile</a></button>
-    
 </section> 
+
 {% endblock %}
