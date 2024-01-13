@@ -13,9 +13,8 @@
 <section>
 <div class="container">
     <div class="row">
-        <center>
             <div class="col-8">
-                <form method="POST" action="{% url 'login' %}">
+                <form method="POST" action="{% url 'sign_in' %}">
                     {% csrf_token %}
                     
                     <div class="mb-3">
@@ -31,7 +30,6 @@
                     <button type="submit" class="btn btn-primary">Login</button>
                   </form>
             </div>
-        </center>
     </div>
 </div>
 </section>

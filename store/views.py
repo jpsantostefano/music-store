@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Category
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -25,10 +25,7 @@ def home(request):
     products = Product.objects.all()
     return render(request, 'home.html', {'products':products})
 
-def about(request):
-    return render(request, 'about.html', {})
-
-def login_user(request):
+def sign_in(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -39,9 +36,9 @@ def login_user(request):
             return redirect('home')
         else:
             messages.success(request, ("There was an error, please try again"))
-            return redirect('login')
+            return redirect('sign_in')
     else:
-        return render(request, 'login.html', {})
+        return render(request, 'account/sign_in.html', {})
 
 def logout_user(request):
     logout(request)
@@ -66,5 +63,18 @@ def register_user(request):
             messages.success(request, ("There is a problem registering. Please try again!"))
             return redirect('register')
     else:
-        return render(request, 'register.html',{'form':form})
+        return render(request, 'account/register.html',{'form':form})
 
+# search bar
+def search(request):
+    return render(request, 'search.html')
+
+# More
+def about(request):
+    return render(request, 'more/about.html', {})
+
+def careers(request):
+    return render(request, 'more/careers.html', {})
+
+def blog(request):
+    return render(request, 'more/blog.html', {})

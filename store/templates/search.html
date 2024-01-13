@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Header-->
+<header>
+    <div>   
+        <h1>Result</h1>
+        <p>Product Search Page</p>
+    </div>
+</header>
+
+<!-- Section-->
+<section class="home-section">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+        {% for product in products %}
+            <div class="home-grid">
+                <div class="card">
+                    <!-- Product Image -->
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <!-- Product Detail-->
+                    <div>
+                        <!-- Product Name-->
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <!-- Product Description-->
+                        <p class="card-text">{{ product.description }}</p>
+                        <!-- Product Price-->
+                        <p class="card-text">€ {{ product.price }}</p>
+                        <!-- View Product Button-->
+                        <a href="{% url 'product' product.id %}" class="btn btn-outline-dark">View Product</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+   
+{% endblock %}

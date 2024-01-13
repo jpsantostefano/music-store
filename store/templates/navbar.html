@@ -8,8 +8,9 @@
 
         <!-- Search bar (Middle) -->
         <div class="nav-middle">
-            <form class="d-flex justify-content-center">
-                <input class="form-control border border-black rounded-0 search-bar" type="text" name="q" placeholder="Search our site">
+            <form class="d-flex justify-content-center" id="searchForm" method="GET" action="{% url 'search' %}">
+            {% csrf_token %}
+                <input class="form-control border border-black rounded-0 search-bar" type="text" name="q" placeholder="Search our site" id="searchInput">
                 <button class="btn btn-black border border-black rounded-0" type="submit">
                     <span class="icon">
                         <i class="fas fa-search"></i>
@@ -30,7 +31,7 @@
                   <li><a class="dropdown-item" href="#">Profile</a></li>
                   <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                   {% else %}
-                  <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                  <li><a class="dropdown-item" href="{% url 'sign_in' %}">Login</a></li>
                   <li><a class="dropdown-item" href="{% url 'register' %}">Register</a></li>
                 </ul>
                 {% endif %}
@@ -70,12 +71,13 @@
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'about' %}">About</a></li>
-              <li><a class="dropdown-item" href="#">Blog</a></li>
-              <li><a class="dropdown-item" href="#">Careers</a></li>
+              <li><a class="dropdown-item" href="{% url 'blog' %}">Blog</a></li>
+              <li><a class="dropdown-item" href="{% url 'careers' %}">Careers</a></li>
             </ul>
         </div>
-    
 </nav>
+
+
 
 
     
