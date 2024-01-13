@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Header-->
+<header>
+    <div>   
+        <h1>Edit Profile</h1>
+        <p>Edit your profile</p>
+    </div>
+</header>
+
+<section class="d-flex justify-content-center align-items-center">
+    <!-- Form Section-->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="row">
+            <button class="btn btn-primary btn-xl" type="submit">Save Changes</button>
+        </div>
+    </form>
+</section> 
+
+{% endblock %}

@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django import forms
+from .forms import ProfileForm
 
 
 def category(request, cat):
@@ -23,6 +24,7 @@ def home(request):
     products = Product.objects.all()
     return render(request, 'home.html', {'products':products})
 
+# Account
 def sign_in(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -58,7 +60,7 @@ def register_user(request):
         return redirect('home')
     return render(request, 'account/register.html')
 
-# search bar
+# Search bar
 def search(request):
     return render(request, 'search.html')
 
@@ -97,11 +99,11 @@ def edit_profile(request, pk):
             else:
                 # If it's a GET request, shows the edition form.
                 form = ProfileForm(instance=profile)
-            return render(request, 'edit_profile.html', {'form': form})
+            return render(request, 'account/edit_profile.html', {'form': form})
         else:
             # If the user is not permited to see this page.
             messages.error(request, "You don't have permission to edit this profile.")
-            return redirect('index')
+            return redirect('home')
     else:
         messages.error(request, "You must be logged in to see this page.")
-        return redirect('index')
+        return redirect('home')

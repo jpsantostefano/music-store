@@ -188,8 +188,9 @@ footer p {
 
 /******** PROFILE VIEW *********/
 .photo-profile{
-    margin-bottom: 50px;
-    padding-right: 30px;
+    padding-right: 60px;
+    display: flex;
+    align-items: center;
 }
 
 .profile-info{
@@ -199,7 +200,7 @@ footer p {
 .profile-card{
     margin-top: 30px;
     margin-bottom: 30px;
-    padding: 30px 30px;
+    padding: 30px 60px;
     background-color: white;
     border-radius: 10px;
 }
