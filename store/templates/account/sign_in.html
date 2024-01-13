@@ -10,27 +10,23 @@
     </div>
 </header>
 
-<section>
-<div class="container">
-    <div class="row">
-            <div class="col-8">
-                <form method="POST" action="{% url 'sign_in' %}">
-                    {% csrf_token %}
-                    
-                    <div class="mb-3">
-                        <label class="form-label d-flex flex-start">Username:</label>
-                        <input type="text" class="form-control" name="username" placeholder="Enter your username">  
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label d-flex flex-start">Password:</label>
-                        <input type="password" class="form-control" name="password" placeholder="Enter your password">
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">Login</button>
-                  </form>
+<section class="register-section">
+        <form method="POST" action="{% url 'sign_in' %}" class="register-form">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label class="form-label d-flex flex-start">Username:</label>
+                <input type="text" class="form-control" name="username" placeholder="Enter your username">  
             </div>
-    </div>
-</div>
+
+            <div class="mb-3">
+                <label class="form-label d-flex flex-start">Password:</label>
+                <input type="password" class="form-control" name="password" placeholder="Enter your password">
+            </div>
+            
+            <button type="submit" class="btn btn-secondary">Login</button>
+            <p>If you have not created an account yet, then please<a href="{% url 'register' %}"><b>Sign up</b></a>first.</p>
+        </form>
+        
 </section>
 {% endblock %}

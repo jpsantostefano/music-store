@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, Category
+from .models import Product, Category, Profile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm
 from django import forms
 
 
@@ -46,24 +44,19 @@ def logout_user(request):
     return redirect('home')
 
 def register_user(request):
-    form = SignUpForm()
-    if request.method == "POST":
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-            email = form.cleaned_data['email']
-
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            messages.success(request, ("You have been register successfuly!"))
-            return redirect('home')
-        else:
-            messages.success(request, ("There is a problem registering. Please try again!"))
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+        if password != password2:
+            message.alert(request, "You're typing a different password.")
             return redirect('register')
-    else:
-        return render(request, 'account/register.html',{'form':form})
+        # Saves the user information
+        myuser = User.objects.create_user(username=username, password=password)
+        myuser.save()
+        messages.success(request, "Your Account has been successfully created.")
+        return redirect('home')
+    return render(request, 'account/register.html')
 
 # search bar
 def search(request):
@@ -78,3 +71,37 @@ def careers(request):
 
 def blog(request):
     return render(request, 'more/blog.html', {})
+
+# Profile views:
+def profile_view(request, pk):
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user_id=pk)
+        return render(request, 'account/profile_view.html', {'profile': profile})
+    else:
+        return redirect('home')
+
+
+def edit_profile(request, pk):
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user_id=pk)
+        print(profile)
+        # Verify if the user is the ownwer of the profile
+        if request.user == profile.user:
+            if request.method == 'POST':
+                # Process data
+                form = ProfileForm(request.POST, request.FILES, instance=profile)
+                if form.is_valid():
+                    form.save()
+                    messages.success(request, "You successfully edited your profile!")
+                    return redirect('profile_view', pk=pk)
+            else:
+                # If it's a GET request, shows the edition form.
+                form = ProfileForm(instance=profile)
+            return render(request, 'edit_profile.html', {'form': form})
+        else:
+            # If the user is not permited to see this page.
+            messages.error(request, "You don't have permission to edit this profile.")
+            return redirect('index')
+    else:
+        messages.error(request, "You must be logged in to see this page.")
+        return redirect('index')

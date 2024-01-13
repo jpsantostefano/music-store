@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Header-->
+<header>
+    <div>   
+        <h1>Profile</h1>
+        <p>Welcome {{ profile.user.username }}'s to your Profile</p>
+    </div>
+</header>
+
+<section>
+    <!-- Information -->
+    <div class="container d-flex justify-content-center">
+        <div class="text-center">
+            <div>
+                <h4>First Name:</h4>
+                <p>{{ profile.first_name }}</p>
+            </div>
+            <div>
+                <h4>Last Name:</h4>
+                <p>{{ profile.last_name }}</p>
+            </div>
+            <div>
+                <h4>Instagram:</h4>
+                <p>{{ profile.instagram }}</p>
+            </div>
+            <div>
+                <h4>Email:</h4>
+                <p>{{ profile.email }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="labels">
+        <h4>Image: </h4>
+    </div>
+    {% if profile.image %}
+        <img src="{{ profile.image.url }}" width="200px" height="200px">
+    {% endif %}
+    <br>
+    <button class="btn btn-primary btn-lg"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Edit profile</a></button>
+    
+</section> 
+{% endblock %}

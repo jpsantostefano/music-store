@@ -1,9 +1,39 @@
-/******** BODY *********/
+/******** ELEMENTS *********/
 
 body {
     margin: 0;
     padding: 0;
     overflow: auto;
+}
+
+a {
+    text-decoration: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: black;
+}
+
+h1 {
+    margin: 0;
+}
+
+section {
+    min-height: 61vh;
+    background-color: #A2A7AA
+}
+
+/******** HEADER *********/
+
+header {
+    background-color: #212529;
+    text-align: center;
+    color: white;
+    padding: 70px;
+    margin-top: 93px
+}
+
+header p {
+    color: #90928E;
 }
 
 /******** NAV BAR *********/
@@ -43,45 +73,6 @@ nav{
 }
 
 
-/******** HEADER *********/
-
-header {
-    background-color: #212529;
-    text-align: center;
-    color: white;
-    padding: 70px;
-}
-
-header p {
-    color: #90928E;
-}
-
-/******** SECTION *********/
-
-section {
-    min-height: 61vh;
-}
-
-.home-section{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    background-color: #A2A7AA;
-    padding: 50px;
-    align-items: center;
-}
-
-.product-card{
-    display: flex;
-    justify-content: center;
-}
-
-.product-section{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 
 /******** FOOTER *********/
 
@@ -99,18 +90,25 @@ footer p {
     margin: 0;
 }
 
-/******** ELEMENTS *********/
-
-a {
-    text-decoration: none;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: black;
+/******** HOME *********/
+.home-section{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background-color: #A2A7AA;
+    padding: 50px;
+    align-items: center;
 }
 
+.product-card{
+    display: flex;
+    justify-content: center;
+}
 
-h1 {
-    margin: 0;
+.home-grid{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /******** OBJECTS *********/
@@ -133,6 +131,8 @@ h1 {
     margin-right: auto;
 }
 
+/******** CART SUMMARY *********/
+
 .img-summary{
     width: 300px;
     height: 200px;
@@ -154,6 +154,7 @@ h1 {
     margin-right: 10px;
 }
 
+/******** PRODUCT *********/
 .product-img{
     height: 300px;
     width: 300px;
@@ -163,8 +164,22 @@ h1 {
     padding: 20px;
 }
 
-.home-grid{
+.product-section{
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
+
+/******** REGISTER *********/
+.register-form{
+    width: 500px;
+    height: auto;
+}
+
+.register-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/******** LOGIN *********/

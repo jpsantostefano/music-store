@@ -10,20 +10,37 @@
     </div>
 </header>
 
-<section>
-<div class="container">
-    <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <form method="POST" action="{% url 'register' %}">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <br>
-                    <button type="submit" class="btn btn-secondary">
-                        Register
-                    </button>
-                </form>
-            </div>
-    </div>
-</div>
+<section class="register-section">
+            <form method="POST" action="/register/" class="register-form">
+            {% csrf_token %}
+
+                <!-- Name input-->
+                <div>
+                    <label for="name">Username</label>
+                    <input class="form-control mt-2" id="username" name="username" type="text" placeholder="Enter your username" required />
+                    
+                    <div class="invalid-feedback" data-sb-feedback="name:required">A username is required.</div>
+                </div>
+              
+                <!-- Password input-->
+                <div class="py-2 mt-2">
+                    <label for="password">Password</label>
+                    <input class="form-control mt-2" id="password" name="password" type="password" placeholder="Enter your password" required/>
+                    <div class="invalid-feedback" data-sb-feedback="password:required">A password is required.</div>
+                </div>
+
+                <!-- Password again input-->
+                <div class="mt-2">
+                    <label for="password2">Password (again)</label>
+                    <input class="form-control mt-2" type="password" id="password2" name="password2" placeholder="Repeat your password" required/>
+                    <div class="invalid-feedback" data-sb-feedback="password:required">A password is required.</div>
+                </div>
+                
+                <!-- Submit Button-->
+                <button class="btn btn-primary btn-xl mt-4" id="submitButton" type="submit">Submit</button>
+                <p>Do you already have an account?<a href="{% url 'sign_in' %}">Sign in</a></p>
+            </form>
+            <br>
+            
 </section>
 {% endblock %}
