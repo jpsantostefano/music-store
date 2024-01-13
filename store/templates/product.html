@@ -9,45 +9,31 @@
   </div>
 </header>
 
-<div class="container py-5 mt-5">
-    <div class="card mb-3">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">{{ product.name }}</h5>
-              <p class="card-text">{{ product.description }}</p>
-
-              €{{ product.price }}
-              <br>
-              <br>
-
-              
-            <div class="col-md-2">
-              Quantity:
+<section>
+    <!--Product-->
+    <div class="product-section">
+        <img src="{{ product.image.url }}" class="product-img" alt="select{{product.id}}">
+        <div class="product-info">
+            <h5>{{ product.name }}</h5>
+            <p>{{ product.description }}</p> 
+            <h6>Price: € {{ product.price }}</h6>
+            <div class="qty-select-container">
+                <p>Quantity:</p>
+                <select id="select{{product.id}}">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
             </div>
-            <div class="col-md-2">
-              <select class="form-select form-select-sm" id="qty-cart">
-                
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-            </div>
-          
-              <br>
-
-              <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
-              <button type="button" class="btn btn-secondary" value="{{ product.id }}" id="add-cart">Add to Cart</button>
-            </div>
-          </div>
+            
+            <h3>Total: €{{totals }}</h3>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+            <button type="button" class="btn btn-secondary" value="{{ product.id }}" id="add-cart">Add to Cart</button>
         </div>
-      </div>
-</div>
+    </div>
+</section>
 
 <script>
 // Check if button pressed
@@ -62,22 +48,14 @@ $(document).on('click', '#add-cart', function(e){
     csrfmiddlewaretoken: '{{ csrf_token }}',
     action: 'post'
         },
-
         success: function(json){
             //console.log(json)
             document.getElementById("cart_quantity").textContent = json.quantity
             location.reload();
         },
-
         error: function(xhr, errmsg, err){
-
         }
-
-
     });
-
-
-
 })
 
 

@@ -65,6 +65,12 @@ section {
     background-color: #A2A7AA;
 }
 
+.product-section{
+    display: flex;
+    justify-content: center;
+    padding-top: 50px
+}
+
 /******** FOOTER *********/
 
 footer {
@@ -95,7 +101,7 @@ h1 {
     margin: 0;
 }
 
-/******** OBECTS *********/
+/******** OBJECTS *********/
 .card {
     background-color: #ffff;
     width: 230px;
@@ -134,4 +140,13 @@ h1 {
 .qty-select-container p, select, button {
     margin: 0; 
     margin-right: 10px;
+}
+
+.product-img{
+    height: auto;
+    width: auto;
+}
+
+.product-info{
+    padding: 20px;
 }
