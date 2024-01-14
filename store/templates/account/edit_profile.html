@@ -12,13 +12,15 @@
 
 <section class="d-flex justify-content-center align-items-center">
     <!-- Form Section-->
+    <div class="profile-card">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <div class="row">
-            <button class="btn btn-primary btn-xl" type="submit">Save Changes</button>
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-outline-dark" type="submit">Save Changes</button>
         </div>
     </form>
+    </div>
 </section> 
 
 {% endblock %}

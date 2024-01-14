@@ -11,22 +11,23 @@
 </header>
 
 <section class="register-section">
+    <div class="profile-card">
         <form method="POST" action="{% url 'sign_in' %}" class="register-form">
             {% csrf_token %}
             
             <div class="mb-3">
-                <label class="form-label d-flex flex-start">Username:</label>
+                <label class="form-label d-flex flex-start"><h6>Username:</h6></label>
                 <input type="text" class="form-control" name="username" placeholder="Enter your username">  
             </div>
 
             <div class="mb-3">
-                <label class="form-label d-flex flex-start">Password:</label>
+                <label class="form-label d-flex flex-start"><h6>Password:</h6></label>
                 <input type="password" class="form-control" name="password" placeholder="Enter your password">
             </div>
             
-            <button type="submit" class="btn btn-secondary">Login</button>
+            <button type="submit" class="btn btn-outline-dark">Login</button>
             <p>If you have not created an account yet, then please<a href="{% url 'register' %}"><b>Sign up</b></a>first.</p>
         </form>
-        
+    </div>
 </section>
 {% endblock %}

@@ -1,84 +1,93 @@
 <!-- Navigation-->
 <!-- Top Nav -->
 <div class="fixed-top">
-<nav>
-    <div class="nav-left">
-        <!-- Logo (Left) -->
-        <a class="nav-left" href="{% url 'home' %}">Music Store</a>
-    </div>
-
-        <!-- Search bar (Middle) -->
-        <div class="nav-middle">
-            <form class="d-flex justify-content-center" id="searchForm" method="GET" action="{% url 'search' %}">
-            {% csrf_token %}
-                <input class="form-control border border-black rounded-0 search-bar" type="text" name="q" placeholder="Search our site" id="searchInput">
-                <button class="btn btn-black border border-black rounded-0" type="submit">
-                    <span class="icon">
-                        <i class="fas fa-search"></i>
-                    </span>
-                </button>
-            </form>
+    <nav>
+        <div class="nav-left">
+            <!-- Logo (Left) -->
+            <a class="nav-left" href="{% url 'home' %}">Music Store</a>
         </div>
-        
-        <!-- Right -->
-        <div class="nav-right">
-            <!-- Account Menu -->
+    
+            <!-- Search bar (Middle) -->
+            <div class="nav-middle">
+                <form class="d-flex justify-content-center" id="searchForm" method="GET" action="{% url 'search' %}">
+                {% csrf_token %}
+                    <input class="form-control border border-black rounded-0 search-bar" type="text" name="q" placeholder="Search our site" id="searchInput">
+                    <button class="btn btn-black border border-black rounded-0" type="submit">
+                        <span class="icon">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Right -->
+            <div class="nav-right">
+                <!-- Account Menu -->
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      My Account
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% if user.is_authenticated %}
+                      <li><a class="dropdown-item" href="{% url 'profile_view' request.user.id %}">Profile</a></li>
+                      <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                      {% else %}
+                      <li><a class="dropdown-item" href="{% url 'sign_in' %}">Login</a></li>
+                      <li><a class="dropdown-item" href="{% url 'register' %}">Register</a></li>
+                    </ul>
+                    {% endif %}
+                </div>
+    
+                <!-- Cart -->
+                
+                    <form>
+                        <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            Cart
+                            <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span>
+                        </a>
+                    </form>           
+            </div>
+    </nav>
+    
+    <!-- Bottom Nav -->
+    
+    <nav class="navbar-bot">   
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'home' %}">All products</a>
+    
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  My Account
+                  Categories
                 </a>
                 <ul class="dropdown-menu">
-                    {% if user.is_authenticated %}
-                  <li><a class="dropdown-item" href="{% url 'profile_view' request.user.id %}">Profile</a></li>
-                  <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                  {% else %}
-                  <li><a class="dropdown-item" href="{% url 'sign_in' %}">Login</a></li>
-                  <li><a class="dropdown-item" href="{% url 'register' %}">Register</a></li>
+                  <li><a class="dropdown-item" href="{% url 'category' 'CDs' %}">CDs</a></li>
+                  <li><a class="dropdown-item" href="{% url 'category' 'Vinyls' %}">Vinyls</a></li>
+                  <li><a class="dropdown-item" href="{% url 'category' 'Instruments' %}">Instruments</a></li>
                 </ul>
-                {% endif %}
             </div>
-
-            <!-- Cart -->
-            
-                <form>
-                    <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span>
-                    </a>
-                </form>           
-        </div>
-</nav>
-
-<!-- Bottom Nav -->
-
-<nav class="navbar-bot">   
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'home' %}">All products</a>
-
-        <div class="dropdown">
-            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Categories
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'category' 'CDs' %}">CDs</a></li>
-              <li><a class="dropdown-item" href="{% url 'category' 'Vinyls' %}">Vinyls</a></li>
-              <li><a class="dropdown-item" href="{% url 'category' 'Instruments' %}">Instruments</a></li>
-            </ul>
-        </div>
-
-        <div class="dropdown">
-            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              More
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'about' %}">About</a></li>
-              <li><a class="dropdown-item" href="{% url 'blog' %}">Blog</a></li>
-              <li><a class="dropdown-item" href="{% url 'careers' %}">Careers</a></li>
-            </ul>
-        </div>
-</nav>
-</div>
+    
+            <div class="dropdown">
+                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  More
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'about' %}">About us</a></li>
+                  <li><a class="dropdown-item" href="{% url 'blog' %}">Blog</a></li>
+                  <li><a class="dropdown-item" href="{% url 'careers' %}">Careers</a></li>
+                </ul>
+            </div>
+    </nav>
+    {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    
 
 
 

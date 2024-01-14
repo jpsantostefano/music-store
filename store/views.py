@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, Category, Profile
+from .models import Product, Category, Profile, Comment
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django import forms
-from .forms import ProfileForm
+from .forms import ProfileForm, CommentForm
 
 
 def category(request, cat):
@@ -17,8 +17,25 @@ def category(request, cat):
         return redirect('home')
 
 def product(request,pk):
-    product = Product.objects.get(id=pk)
-    return render(request, 'product.html', {'product':product})
+    product = get_object_or_404(Product, id=pk)
+    comments = Comment.objects.filter(product=product)
+    # Comment form
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.user = request.user
+            comment.product = product
+            comment.save()
+            messages.success(request, "You successfully left a comment!")
+            return redirect('product', pk=product.id)
+    else:
+        comment_form = CommentForm()
+
+    return render(request, 'product.html', {'product': product, 'comments': comments, 'comment_form': comment_form, 'pk':pk})
+
+
+
 
 def home(request):
     products = Product.objects.all()
@@ -40,10 +57,6 @@ def sign_in(request):
     else:
         return render(request, 'account/sign_in.html', {})
 
-def logout_user(request):
-    logout(request)
-    messages.success(request, ("You have been logged out!"))
-    return redirect('home')
 
 def register_user(request):
     if request.method == 'POST':
@@ -56,9 +69,16 @@ def register_user(request):
         # Saves the user information
         myuser = User.objects.create_user(username=username, password=password)
         myuser.save()
+        user = authenticate(username=username, password=password)
+        login(request, user)
         messages.success(request, "Your Account has been successfully created.")
         return redirect('home')
     return render(request, 'account/register.html')
+
+def logout_user(request):
+    logout(request)
+    messages.success(request, ("You have been logged out!"))
+    return redirect('home')
 
 # Search bar
 def search(request):
@@ -104,6 +124,34 @@ def edit_profile(request, pk):
             # If the user is not permited to see this page.
             messages.error(request, "You don't have permission to edit this profile.")
             return redirect('home')
+    else:
+        messages.error(request, "You must be logged in to see this page.")
+        return redirect('home')
+
+# Comment
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.method == 'POST':
+        if request.POST.get('confirm_delete'):
+            comment.delete()
+            messages.success(request, "You successfully deleted your comment!")
+            return redirect('product', id=comment.product.id)
+    return render(request, 'reviews/delete_comment.html', {'comment': comment})
+
+
+def edit_comment(request, comment_id):
+    if request.user.is_authenticated:
+        comment = get_object_or_404(Comment, id=comment_id)
+        # Edit comment form
+        if request.method == 'POST':
+            form = CommentForm(request.POST, request.FILES, instance=comment)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "You successfully edited your comment!")
+                return redirect('product', id=comment.product.id)
+        else:
+            form = CommentForm(instance=comment)
+        return render(request, 'reviews/edit_comment.html', {'form': form, 'comment': comment})
     else:
         messages.error(request, "You must be logged in to see this page.")
         return redirect('home')

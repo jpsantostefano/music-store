@@ -9,32 +9,75 @@
   </div>
 </header>
 
-<section class="product-section">
-    <!--Product-->
-    <div class="product-card">
-        <img src="{{ product.image.url }}" class="product-img" alt="select{{product.id}}">
-        <div class="product-info">
-            <h5>{{ product.name }}</h5>
-            <p>{{ product.description }}</p> 
-            <h6>Price: € {{ product.price }}</h6>
-            <div class="qty-select-container">
-                <p>Quantity:</p>
-                <select id="select{{product.id}}">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
+<section class="d-flex justify-content-center align-items-center">
+    <!-- Card -->
+    <div class="profile-card">
+        <div class="d-flex">
+            <img src="{{ product.image.url }}" class="product-img" alt="select{{product.id}}">
+            <div class="product-info">
+                <h5>{{ product.name }}</h5>
+                <p>{{ product.description }}</p> 
+                <h6>Price: € {{ product.price }}</h6>
+                <div class="qty-select-container">
+                    <p>Quantity:</p>
+                    <select id="select{{product.id}}">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
             
-            <h3>Total: €{{totals }}</h3>
-            <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
-            <button type="button" class="btn btn-secondary" value="{{ product.id }}" id="add-cart">Add to Cart</button>
+                <h3>Total: €{{totals }}</h3>
+                <a href="{% url 'home' %}" class="btn btn-outline-dark">Home</a>
+                <button type="button" class="btn btn-outline-dark" value="{{ product.id }}" id="add-cart">Add to Cart</button>
+            </div>
         </div>
-    </div>
-</section>
 
+        <hr>
+
+        <!-- COMMENTS -->
+        <div>
+            <h2>Reviews</h2>
+            <div>
+                
+                    {% for comment in comments %}
+                    <div>
+                    <strong>{{ comment.user.username }}: </strong><small>{{comment.date_added}}</small>
+                    <br>
+                    
+                    </div>
+                    {{ comment.text }}
+                    
+                    {% endfor %}
+                
+            </div>
+
+            <!-- ADD COMMENT -->
+            <div>
+                <h6>Add a comment</h6>
+                <br>
+                <form method="POST" action="{% url 'product' pk=pk %}">
+                    {% if user.is_authenticated %}
+                    {% csrf_token %}
+                    {{ comment_form.text }}
+                        <div>
+                            <button class="btn btn-outline-dark">Submit</button>
+                        </div>
+                    {% else %}
+                    <p><a href="{% url 'sign_in' %}">LOGIN</a>  or <a href="{% url 'register' %}">REGISTER</a>  to leave a comment!</p>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</section>
+{% endblock %}
 <script>
 // Check if button pressed
 $(document).on('click', '#add-cart', function(e){
@@ -61,4 +104,3 @@ $(document).on('click', '#add-cart', function(e){
 
 </script>
 
-{% endblock %}

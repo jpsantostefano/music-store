@@ -104,11 +104,6 @@ footer p {
     align-items: center;
 }
 
-.product-card{
-    display: flex;
-    justify-content: center;
-}
-
 .home-grid{
     display: flex;
     flex-direction: column;
@@ -166,12 +161,24 @@ footer p {
 
 .product-info{
     padding: 20px;
+    align-content: center;
 }
 
 .product-section{
     display: flex;
     justify-content: center;
+}
+
+.product-card{
+    display: flex;
     align-items: center;
+    border-radius: 10px;
+    background-color: #ffff;
+}
+
+.comment-textarea {
+    height: 50px;
+    width: 500px;
 }
 
 /******** REGISTER *********/
@@ -201,6 +208,6 @@ footer p {
     margin-top: 30px;
     margin-bottom: 30px;
     padding: 30px 60px;
-    background-color: white;
+    background-color: #ffff;
     border-radius: 10px;
 }
