@@ -41,17 +41,27 @@
         <div>
             <h2>Reviews</h2>
             <div>
+                {% for comment in comments %}
+                <div>
+                <strong>{{ comment.user.username }}: </strong><small>{{comment.date_added}}</small>
+                <br>
                 
-                    {% for comment in comments %}
-                    <div>
-                    <strong>{{ comment.user.username }}: </strong><small>{{comment.date_added}}</small>
-                    <br>
-                    
+                </div>
+                {{ comment.text }}
+                {% if user.is_authenticated and comment.user == user %}
+                    <!--Edit comment -->
+                    <button><a class="nav-link px-0" href="{% url 'edit_comment' comment.id %}"><i class="fa-regular fa-pen-to-square"></i></a></button>
+
+                    <!--Delete comment -->
+                    <button><a class="nav-link px-0" href="{% url 'delete_comment' comment.id %}"><i class="fa-solid fa-trash"></i></a></button>
+                    {% endif %}
+
+                    {% empty %}
+                    <div class="notification">
+                        <p>No comments yet!</p>
                     </div>
-                    {{ comment.text }}
-                    
                     {% endfor %}
-                
+                    <hr>
             </div>
 
             <!-- ADD COMMENT -->
@@ -61,7 +71,7 @@
                 <form method="POST" action="{% url 'product' pk=pk %}">
                     {% if user.is_authenticated %}
                     {% csrf_token %}
-                    {{ comment_form.text }}
+                    {{ comment_form.text }}                  
                         <div>
                             <button class="btn btn-outline-dark">Submit</button>
                         </div>
@@ -71,11 +81,7 @@
                 </form>
             </div>
         </div>
-
     </div>
-
-
-
 </section>
 {% endblock %}
 <script>

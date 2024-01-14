@@ -148,7 +148,7 @@ def edit_comment(request, comment_id):
             if form.is_valid():
                 form.save()
                 messages.success(request, "You successfully edited your comment!")
-                return redirect('product', id=comment.product.id)
+                return redirect('product', pk=comment.product.id)
         else:
             form = CommentForm(instance=comment)
         return render(request, 'reviews/edit_comment.html', {'form': form, 'comment': comment})

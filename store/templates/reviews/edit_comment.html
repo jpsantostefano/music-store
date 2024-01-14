@@ -10,10 +10,22 @@
     </div>
 </header>
 
-<div class="container">
-    <div class="row">
-        <p>Are you sure you wanna Edit this comment?</p>
+<section class="d-flex justify-content-center align-items-center">
+    
+    <div class="profile-card">
+        <form method="POST">
+        {% csrf_token %}  
+        {{ form.text }}
+        <div>
+            <button class="btn btn-outline-dark" type="submit">Save Changes</button>
+            <a class="btn btn-outline-dark" href="{% url 'product' pk=comment.product.pk %}">Go back</a>
+        </div>
     </div>
-</div>
-
+        
+            
+        
+        </form>
+        <br>
+        
+</section>
 {% endblock %}
