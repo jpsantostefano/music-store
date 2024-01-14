@@ -135,7 +135,7 @@ def delete_comment(request, comment_id):
         if request.POST.get('confirm_delete'):
             comment.delete()
             messages.success(request, "You successfully deleted your comment!")
-            return redirect('product', id=comment.product.id)
+            return redirect('product', pk=comment.product.id)
     return render(request, 'reviews/delete_comment.html', {'comment': comment})
 
 
