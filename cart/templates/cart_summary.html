@@ -12,116 +12,20 @@
 
 <!-- Section-->
 <section>
-    <div class="summary-card mt-3 mb-3">
-        {% if cart_products %}
-        {% for product in cart_products %}
-        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-summary">
-    
-        <div>
-            <h5>{{ product.name }}</h5>
-            <p>{{ product.description }}</p>
-            €{{ product.price }}
-            <div class="qty-select-container">
-                <p>Quantity:</p>
-                <select class="form-select form-select-sm" id="select{{product.id}}">
-                    {% for key, value in quantities.items %}
-                        {% if key == product.id|slugify %}
-                            <option selected>{{ value }}</option>
-                        {% endif %}
-                    {% endfor %}
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-                <button type="button" data-index="{{product.id}}" class="btn btn-secondary update-cart">
-                    Update
-                </button>
-            </div> 
-            <div class="mt-2">
-                <a href="{% url 'home' %}" class="btn btn-secondary">Go back</a>
-                <button type="button" data-index="{{product.id}}" class="btn btn-danger delete-product">
-                    Remove product
-                </button>
-                {% endfor %}
-            </div> 
+    <div class="profile-card">
+        <div class="d-flex">
+            {% if bag_items %}
+                <div></div>
+            {% else %}
+            <p>Your bag is empty</p>
+            <a href="{% url 'home' %}" class="btn-outline-dark">Keep Shopping</a>
+            {% endif %}
         </div>
-    </div>   
-    <div>
-        <h3>Total: €{{totals }}</h3>
-        <a href="{% url 'home' %}" class="btn btn-outline-black rounded-0 btn-lg">
-            <span class="icon">
-                <i class="fas fa-chevron-left"></i>
-            </span>
-            <span class="text-uppercase">
-                Keep Shopping
-            </span>
-        </a>
-        <a href="{% url 'checkout' %}" class="btn btn-black rounded-0 btn-lg">
-            <span class="text-uppercase">
-                Secure Checkout
-            </span>
-            <span class="icon">
-                <i class="fas fa-lock"></i>
-            </span>
-        </a>
-        {% else %}
-        There's nothing in your cart
-        {% endif %}
     </div>
 </section>
 
 <script>
-    $(document).on('click', '.update-cart', function(e){
-    e.preventDefault();
-    // grab the product id
-    var productid = $(this).data('index');
-
-    $.ajax({
-    type: 'POST',
-    url: '{% url "cart_update" %}',
-    data: {
-      product_id: $(this).data('index'),
-      product_qty: $('#select' + productid + ' option:selected').text(),
-      csrfmiddlewaretoken: '{{ csrf_token }}',
-      action: 'post'
-    },
-    success: function(json){
-        location.reload();
-    },
-
-    error: function(xhr, errmsg, err){
-
-    }
-
-    });
-
-})
-
-    // Delete Item From Cart
-    $(document).on('click', '.delete-product', function(e){
-    e.preventDefault();
-
-    $.ajax({
-    type: 'POST',
-    url: '{% url "cart_delete" %}',
-    data: {
-      product_id: $(this).data('index'),
-      csrfmiddlewaretoken: '{{ csrf_token }}',
-      action: 'post'
-    },
-    success: function(json){
-        location.reload();
-    },
-
-    error: function(xhr, errmsg, err){
-
-    }
-
-    });
-
-})
-
+   
 </script>
+
 {% endblock %}

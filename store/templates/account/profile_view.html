@@ -16,7 +16,9 @@
             <div class="d-flex">
                 <!-- Image -->
                 <div class="photo-profile">
+                    {% if profile.image %}
                     <img class="rounded-circle" width="150px" src="{{ profile.image.url }}">
+                    {% endif %}
                 </div>
                 <!-- Information -->
                 <div>

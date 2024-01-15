@@ -1,59 +1,70 @@
-from django.shortcuts import render, get_object_or_404
-from .cart import Cart
+from django.shortcuts import render, redirect, get_object_or_404
 from store.models import Product
-from django.http import JsonResponse
+from .models import Comment, Cart, CartManager
 from django.contrib import messages
+from .forms import CommentForm
+
 
 def cart_summary(request):
-    # Get the cart
-    cart = Cart(request)
-    cart_products = cart.get_products
-    quantities = cart.get_quants
-    totals = cart.cart_total()
-    return render(request, "cart_summary.html",{'cart_products':cart_products, 'quantities':quantities, 'totals':totals})
+    return render(request, 'cart_summary.html')
 
-def cart_add(request):
-    # Get the cart
-    cart = Cart(request)
-    # Test for POST
-    if request.POST.get('action') == 'post':
-        # Get stuff
-        product_id = int(request.POST.get('product_id'))
-        product_qty = int(request.POST.get('product_qty'))
-        # Lookup product in DB
-        product = get_object_or_404(Product, id=product_id)
-        # Save to session
-        cart.add(product=product, quantity=product_qty)
-        # Get Cart Quantity
-        cart_quantity = cart.__len__()
-        # Return response
-        response = JsonResponse({'quantity': cart_quantity})
-        messages.success(request, ("Product added to Shopping Cart"))
-        return response
+def cart_add(request, item_id):
+    quantity = int(request.POST.get('quantity'))
+    redirect_url = request.POST.get('redirect_url')
+    cart = request.session.get('cart', {})
 
-def cart_delete(request):
-    cart = Cart(request)
-    if request.POST.get('action') == 'post':
-	    # Get stuff
-	    product_id = int(request.POST.get('product_id'))
-	    # Call delete Function in Cart
-	    cart.delete(product=product_id)
+    if item_id in list(cart.keys()):
+        cart[item_id] += quantity
+    else:
+        cart[item_id] = quantity
+    
+    request.session['cart'] = cart
+    print(request.session['cart'])
+    return redirect(redirect_url)
 
-	    response = JsonResponse({'product':product_id})
-		#return redirect('cart_summary')
-	    messages.success(request, ("Item Deleted from Shopping Cart"))
-	    return response
+# Product       
+def product_detail(request,pk):
+    product = get_object_or_404(Product, id=pk)
+    comments = Comment.objects.filter(product=product)
+    # Comment form
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.user = request.user
+            comment.product = product
+            comment.save()
+            messages.success(request, "You successfully left a comment!")
+            return redirect('product_detail', pk=product.id)
+    else:
+        comment_form = CommentForm()
 
-def cart_update(request):
-    cart = Cart(request)
-    if request.POST.get('action') == 'post':
-		# Get stuff
-        product_id = int(request.POST.get('product_id'))
-        product_qty = int(request.POST.get('product_qty'))
+    return render(request, 'product_detail.html', {'product': product, 'comments': comments, 'comment_form': comment_form, 'pk':pk})
 
-        cart.update(product=product_id, quantity=product_qty)
-        response = JsonResponse({'qty':product_qty})
-        messages.success(request, ("Product quantity updated from Shopping Cart"))
-		
-        return response
-        
+# Comment
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.method == 'POST':
+        if request.POST.get('confirm_delete'):
+            comment.delete()
+            messages.success(request, "You successfully deleted your comment!")
+            return redirect('product', pk=comment.product.id)
+    return render(request, 'reviews/delete_comment.html', {'comment': comment})
+
+
+def edit_comment(request, comment_id):
+    if request.user.is_authenticated:
+        comment = get_object_or_404(Comment, id=comment_id)
+        # Edit comment form
+        if request.method == 'POST':
+            form = CommentForm(request.POST, request.FILES, instance=comment)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "You successfully edited your comment!")
+                return redirect('product', pk=comment.product.id)
+        else:
+            form = CommentForm(instance=comment)
+        return render(request, 'reviews/edit_comment.html', {'form': form, 'comment': comment})
+    else:
+        messages.error(request, "You must be logged in to see this page.")
+        return redirect('home')
