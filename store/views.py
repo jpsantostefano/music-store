@@ -8,13 +8,9 @@ from .forms import ProfileForm
 
 
 def category(request, cat):
-    try:
-        category = Category.objects.get(name=cat)
-        products = Product.objects.filter(category=category)
-        return render(request,'category.html',{'products':products,'category':category})
-    except:
-        messages.success(request, ("That category doesn't exist"))
-        return redirect('home')
+    category = Category.objects.get(name=cat)
+    products = Product.objects.filter(category=category)
+    return render(request,'category.html',{'products':products,'category':category})
 
 def home(request):
     products = Product.objects.all()
