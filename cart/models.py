@@ -20,15 +20,4 @@ class Comment(models.Model):
         ordering = ['date_added']
 
 
-class CartManager(models.Manager):
-    def get_or_create_cart(self, user):
-        cart, created = self.get_or_create(user=user)
-        return cart
 
-class Cart(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # Otros campos del carrito
-    objects = CartManager()
-    def calculate_total(self):
-        # Lógica para calcular el total del carrito
-        pass

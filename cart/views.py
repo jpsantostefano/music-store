@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from store.models import Product
-from .models import Comment, Cart, CartManager
+from .models import Comment
 from django.contrib import messages
 from .forms import CommentForm
 
@@ -19,7 +19,6 @@ def cart_add(request, item_id):
         cart[item_id] = quantity
     
     request.session['cart'] = cart
-    print(request.session['cart'])
     return redirect(redirect_url)
 
 # Product       

@@ -14,10 +14,51 @@
 <section>
     <div class="profile-card">
         <div class="d-flex">
-            {% if bag_items %}
-                <div></div>
+            {% if cart_items %}
+            }
+                <div class="table-responsive rounded">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Product Info</th>
+                                <th scope="col"></th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Subtotal</th>
+                            </tr>
+                        </thead>
+                        {% for item in cart_items %}
+                            <tr>
+                                <td class="py-3 w-25">
+                                    <img class="img-fluid rounded" src="{{ item.product.image.url }}">
+                                </td>
+                                <td class="py-3">
+                                    <p class="my-0"><strong>{{ item.product.name }}</strong></p>
+                                    <p class="my-0 small text-muted">SKU: {{ item.product.sku|upper }}</p>
+                                </td>
+                                <td class="py-3">
+                                    <p class="my-0">{{ item.product.price }}</p>
+                                    
+                                </td>
+                                <td class="py-3">
+                                    <p class="my-0">{{ item.quantity }}</p>
+                                    
+                                </td>
+                                <td class="py-3">
+                                    <p class="my-0">{{ item.product.price }}</p>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6>{{ total|floatformat:2 }}</h6>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             {% else %}
-            <p>Your bag is empty</p>
+            <p>Your cart is empty</p>
             <a href="{% url 'home' %}" class="btn-outline-dark">Keep Shopping</a>
             {% endif %}
         </div>

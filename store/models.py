@@ -43,15 +43,14 @@ post_save.connect(create_profile, sender=User)
 class Product(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(default=0, decimal_places=2, max_digits=10)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, default=1, null=True, blank=True)
     description = models.CharField(max_length=250, default='', blank=True, null=True)
     image = models.ImageField(upload_to='uploads/product/')
+    image_url = models.URLField(max_length=1024, null=True, blank=True)
+    sku = models.CharField(max_length=254, null=True, blank=True)
 
     def __str__(self):
         return self.name
-
-
-
 
 # Post
 class Post(models.Model):
