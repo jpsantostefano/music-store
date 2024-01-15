@@ -9,14 +9,19 @@ def cart_summary(request):
     return render(request, 'cart_summary.html')
 
 def cart_add(request, item_id):
+    product = get_object_or_404(Product, pk=item_id)
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
     cart = request.session.get('cart', {})
 
     if item_id in list(cart.keys()):
         cart[item_id] += quantity
+        messages.success(request,
+                            (f'Updated {product.name} '
+                            f'quantity to {cart[item_id]}'))
     else:
         cart[item_id] = quantity
+        messages.success(request, f'Added {product.name} to your cart')
     
     request.session['cart'] = cart
     return redirect(redirect_url)
