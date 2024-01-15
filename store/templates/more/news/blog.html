@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Header-->
+<header>
+    <div>   
+        <h1>Blog</h1>
+        <p>Welcome To Music Store</p>
+    </div>
+</header>
+
+<section>
+    {% for post in posts %}
+        <div class="col-md-6 col-lg-4 mb-5">
+            <div class="portfolio-item mx-auto">             
+                <h2><a href=""></a>{{ post.title }}</h2> <!-- This refers to models.py title -->
+                <br>
+                {% if post.image %}
+                <img src="{{ post.image.url }}" width="300px" height="200px">
+                {% endif %}
+                <p>{{ post.intro }}</p>
+                <a href="{% url 'post_detail' post.slug %}">Reviews</a>
+            </div>        
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}

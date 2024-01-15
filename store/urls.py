@@ -22,5 +22,7 @@ urlpatterns = [
     # Comments
     path('delete_comment/<int:comment_id>', views.delete_comment,name='delete_comment'),
     path('edit_comment/<int:comment_id>', views.edit_comment,name='edit_comment'),
+    # Post
+    path('<slug:slug>/', views.post_detail, name='post_detail'),
 ]
 

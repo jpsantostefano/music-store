@@ -1,7 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-import datetime
+from django.utils import timezone
+from datetime import datetime
+
+def current_date():
+    return datetime.today().isoformat()
 
 # Categories of Products
 class Category(models.Model):
@@ -46,18 +50,6 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-# Customer orders
-class Order(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-    address = models.CharField(max_length=100, default='', blank=True)
-    phone = models.CharField(max_length=20, default='', blank=True)
-    date = models.DateField(default=datetime.datetime.today)
-    status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.product
 
 # Reviews
 class Comment(models.Model):
@@ -71,3 +63,15 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['date_added']
+
+# Post
+class Post(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField()
+    date = models.DateField(default=current_date)
+    body = models.TextField()
+    image = models.ImageField(null=True, blank=True, upload_to='images/')
+
+    def __self__(self):
+        return self.title
+

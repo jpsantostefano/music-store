@@ -40,13 +40,13 @@
     
                 <!-- Cart -->
                 
-                    <form>
+                    <div>
                         <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark">
                             <i class="fa-solid fa-cart-shopping"></i>
                             Cart
                             <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span>
                         </a>
-                    </form>           
+                    </div>           
             </div>
     </nav>
     
@@ -73,8 +73,8 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="{% url 'about' %}">About us</a></li>
-                  <li><a class="dropdown-item" href="{% url 'blog' %}">Blog</a></li>
                   <li><a class="dropdown-item" href="{% url 'careers' %}">Careers</a></li>
+                  <li><a class="dropdown-item" href="{% url 'blog' %}">News</a></li>
                 </ul>
             </div>
     </nav>

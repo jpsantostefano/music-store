@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Header-->
+<header>
+    <div>   
+        <h1>Blog</h1>
+        <p>Welcome To Music Store</p>
+    </div>
+</header>
+
+<section>
+    <div class="container">
+        <h1 class="title">{{ post.title }}</h1>
+        {% if post.image %}
+        <img src="{{ post.image.url }}" width="300px" height="200px">
+        {% endif %}
+        <p><strong>{{post.date_added}}</strong></p>
+        <p>{{ post.body }}</p>
+        <hr>
+    </div>
+</section>
+
+{% endblock %}

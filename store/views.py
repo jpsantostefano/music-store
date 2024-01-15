@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, Category, Profile, Comment
+from .models import Product, Category, Profile, Comment, Post
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -33,9 +33,6 @@ def product(request,pk):
         comment_form = CommentForm()
 
     return render(request, 'product.html', {'product': product, 'comments': comments, 'comment_form': comment_form, 'pk':pk})
-
-
-
 
 def home(request):
     products = Product.objects.all()
@@ -155,3 +152,13 @@ def edit_comment(request, comment_id):
     else:
         messages.error(request, "You must be logged in to see this page.")
         return redirect('home')
+
+# Blog post
+def blog(request):
+    # Shows all the posts
+    posts = Post.objects.all()
+    return render(request, 'more/news/blog.html', {'posts': posts})
+
+def post_detail(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    return render(request, 'more/news/post_detail.html', {'post': post})
