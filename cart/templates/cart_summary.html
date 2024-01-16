@@ -13,34 +13,66 @@
 <!-- Section-->
 <section>
     <div class="profile-card">
-    {% if cart_items %}                 
-        {% for item in cart_items %}
-            <div>
-                <!-- Image-->
-                <img src="{{ item.product.image.url }}" width="200px" height="200px">
-                <!-- Name -->           
-                {{ item.product.name }}
-                <!-- SKU -->  
-                SKU: {{ item.product.sku|upper }}
-                <!-- Price -->  
-                {{ item.product.price }}
-                <!-- Quantity -->  
-                {{ item.quantity }}
+        {% if cart_items %}
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Name</th>
+                            <th>SKU</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                            <tr>
+                                <!-- Product Image -->
+                                <td>
+                                    <img src="{{ item.product.image.url }}" width="100px" height="100px" alt="Product Image">
+                                </td>
+                                <!-- Product Name -->
+                                <td>{{ item.product.name }}</td>
+                                <!-- SKU -->
+                                <td>{{ item.product.sku|upper }}</td>
+                                <!-- Price -->
+                                <td>{{ item.product.price }}</td>
+                                <!-- Quantity -->
+                                <td>
+                                    <!--Minus-->
+                                    <button class="decrement-qty btn btn-black rounded-0" data-item_id="{{ product.id }}"
+                                    id="decrement-qty_{{ product.id }}">
+                                    <i class="fas fa-minus"></i>
+                                    </button>
+                                    <!-- Quantity-->
+                                    <input class="qty_input id_qty_{{ product.id }}" type="number"
+                                    name="quantity" value="{{ item.quantity }}" min="1" max="99"
+                                    data-item_id="{{ product.id }}">
+                                    <!-- Plus -->
+                                    <button class="increment-qty btn btn-black rounded-0" data-item_id="{{ product.id }}"
+                                    id="increment-qty_{{ product.id }}">
+                                    <i class="fas fa-plus"></i>
+                                    </button>
+                                </td>
+                                <!-- Subtotal -->
+                                <td>{{ item.quantity }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-        {% endfor %}
-        <!-- Total Price -->
-        <div>
-            {{ total|floatformat:2 }}
-        </div>
-        <div>
+            <div class="d-flex justify-content-end">
+                <h6>Total Price: {{ total|floatformat:2 }}</h6>
+            </div>
         {% else %}
             <p>Your cart is empty</p>
         {% endif %}
-        </div>
-        <a href="{% url 'home' %}" class="btn-outline-dark">Keep Shopping</a>
+
+        <a href="{% url 'home' %}" class="btn btn-outline-dark">Keep Shopping</a>
+        <a href="{% url 'home' %}" class="btn btn-outline-dark">Go to Checkout</a>
     </div>
 </section>
-
 {% endblock %}
-
 
