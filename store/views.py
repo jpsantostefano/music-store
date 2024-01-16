@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, Category, Profile, Post, Careers
+from .models import Product, Category, Profile, Post, Careers, Subscriber
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django import forms
-from .forms import ProfileForm, CareersForm
+from .forms import ProfileForm, CareersForm, NewsletterSubscriptionForm
 from django.core.mail import send_mail
 from django.conf import settings
+from django.http import HttpResponseRedirect
+
 
 
 def category(request, cat):
@@ -138,3 +140,16 @@ def careers(request):
 # About
 def about(request):
     return render(request, 'more/about.html', {})
+
+# Newsletter
+
+def subscribe_newsletter(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        print("Email received:", email)
+        if email:
+            Subscriber.objects.create(email=email)
+            messages.success(request, "Thank you for subscribing!")
+            return redirect('home')
+
+    return render(request, 'home.html')

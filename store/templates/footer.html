@@ -45,11 +45,11 @@
             <!-- Right -->
             <div class="footer-right mt-3 mb-2">
                 <h6 class="text-white">Subscribe to our newsletter and get 15% off your next order.</h6>
-                <form class="d-flex flex-row mb-2 p-1 bg-white input-group">
-                    <input type="email" class="form-control rounded border-0" placeholder="Your Email">
+                <form class="d-flex flex-row mb-2 p-1 bg-white" method="post" action="{% url 'home' %}">
+                    {% csrf_token %}
+                    <input type="email" name="email" class="form-control rounded border-0" placeholder="Your Email">
                     <button class="btn btn-secondary flex-shrink-0" type="submit">Subscribe</button>
                 </form>
-                <p class="fs-sm text-white text-opacity-75">I agree to receive newsletters</p>
             </div>
         </div>
 </footer>

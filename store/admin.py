@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
-from .models import Profile, Post, Product, Category, Careers
+from .models import Profile, Post, Product, Category, Careers, Subscriber
 
 #Unregister Groups
 admin.site.unregister(Group)
@@ -26,3 +26,8 @@ admin.site.register(Product)
 
 admin.site.register(Category)
 admin.site.register(Careers)
+
+class SubscriberAdmin(admin.ModelAdmin):
+    list_display = ('email',)
+
+admin.site.register(Subscriber, SubscriberAdmin)

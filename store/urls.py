@@ -17,7 +17,6 @@ urlpatterns = [
     # Product
     path('category/<str:cat>', views.category, name='category'),
     path('search/', views.search, name='search'),
-    
     # Post
     path('<slug:slug>/', views.post_detail, name='post_detail'),
 ]
