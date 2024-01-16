@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, Category, Profile, Post
+from .models import Product, Category, Profile, Post, Careers
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django import forms
-from .forms import ProfileForm
+from .forms import ProfileForm, CareersForm
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def category(request, cat):
@@ -103,7 +105,7 @@ def edit_profile(request, pk):
         messages.error(request, "You must be logged in to see this page.")
         return redirect('home')
 
-# Blog post
+# News post
 def blog(request):
     # Shows all the posts
     posts = Post.objects.all()
@@ -112,3 +114,25 @@ def blog(request):
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
     return render(request, 'more/news/post_detail.html', {'post': post})
+
+# Careers Contact
+def careers(request):
+    if request.method == 'POST':
+        form = CareersForm(request.POST, request.FILES)
+        # Save on database
+        if form.is_valid():
+            career_instance = form.save()
+            # Send email
+            subject = 'New careers form'
+            message = f"There is a new careers form:\n\nName: {career_instance.full_name}\nPosition: {career_instance.position}\nEmail: {career_instance.email}\nmessage: {career_instance.message}\ncv: {career_instance.cv}"
+
+            from_email = settings.DEFAULT_FROM_EMAIL
+            recipient_list = ['musicstoredublin@gmail.com']  
+
+            send_mail(subject, message, from_email, recipient_list)
+            messages.success(request, "Form submitted successfully. Thanks for applying!")
+            return redirect('careers')
+    else:
+        form = CareersForm()
+
+    return render(request, 'more/careers.html', {'form': form})

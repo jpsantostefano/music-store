@@ -108,7 +108,18 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_PORT = 587  
+EMAIL_USE_TLS = True  
+EMAIL_HOST_USER = 'musicstoredublin@gmail.com'  
+EMAIL_HOST_PASSWORD = 'Dublin44$'
+DEFAULT_FROM_EMAIL = 'musicstoredublin@gmail.com'
+SERVER_EMAIL = 'musicstoredublin@gmail.com'
 
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
