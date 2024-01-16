@@ -13,7 +13,7 @@ urlpatterns = [
     # More
     path('about/', views.about, name='about'),
     path('careers/', views.careers, name='careers'),
-    path('blog/', views.blog, name='blog'),
+    path('news/', views.news, name='news'),
     # Product
     path('category/<str:cat>', views.category, name='category'),
     path('search/', views.search, name='search'),

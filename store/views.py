@@ -62,14 +62,11 @@ def search(request):
     return render(request, 'search.html')
 
 # More
-def about(request):
-    return render(request, 'more/about.html', {})
+
 
 def careers(request):
     return render(request, 'more/careers.html', {})
 
-def blog(request):
-    return render(request, 'more/blog.html', {})
 
 # Profile views:
 def profile_view(request, pk):
@@ -105,11 +102,12 @@ def edit_profile(request, pk):
         messages.error(request, "You must be logged in to see this page.")
         return redirect('home')
 
+# More
 # News post
-def blog(request):
+def news(request):
     # Shows all the posts
     posts = Post.objects.all()
-    return render(request, 'more/news/blog.html', {'posts': posts})
+    return render(request, 'more/news/news.html', {'posts': posts})
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
@@ -136,3 +134,7 @@ def careers(request):
         form = CareersForm()
 
     return render(request, 'more/careers.html', {'form': form})
+
+# About
+def about(request):
+    return render(request, 'more/about.html', {})
