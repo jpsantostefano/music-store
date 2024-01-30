@@ -28,7 +28,7 @@
                     </thead>
                     <tbody>
                         {% for item in cart_items %}
-                            <tr>
+                            <tr> 
                                 <!-- Product Image -->
                                 <td>
                                     <img src="{{ item.product.image.url }}" width="100px" height="100px" alt="Product Image">
@@ -41,23 +41,38 @@
                                 <td>{{ item.product.price }}</td>
                                 <!-- Quantity -->
                                 <td>
+                                    <!--Update-->
+                                    <a class="btn btn-success update-item-btn" id="update{{ item.item_id }}">Update</a>
+
                                     <!--Minus-->
-                                    <button class="decrement-qty btn btn-black rounded-0" data-item_id="{{ product.id }}"
-                                    id="decrement-qty_{{ product.id }}">
+                                    <button class="decrement-qty btn btn-black rounded-0" data-item_id="{{ item.product.id }}"
+                                    id="decrement-qty_{{ item.product.id }}">
                                     <i class="fas fa-minus"></i>
                                     </button>
+                                    
                                     <!-- Quantity-->
-                                    <input class="qty_input id_qty_{{ product.id }}" type="number"
+                                    <input class="qty_input id_qty_{{ item.product.id }}" type="number"
                                     name="quantity" value="{{ item.quantity }}" min="1" max="99"
-                                    data-item_id="{{ product.id }}">
+                                    data-item_id="{{ item.product.id }}">
                                     <!-- Plus -->
-                                    <button class="increment-qty btn btn-black rounded-0" data-item_id="{{ product.id }}"
-                                    id="increment-qty_{{ product.id }}">
+                                    <button class="increment-qty btn btn-black rounded-0" data-item_id="{{ item.product.id }}"
+                                    id="increment-qty_{{ item.product.id }}">
                                     <i class="fas fa-plus"></i>
                                     </button>
+                                    <!--Remove-->
+                                    <a class="btn btn-danger remove-item-btn" id="remove_{{ item.item_id }}">Remove</a>
+                                    
                                 </td>
                                 <!-- Subtotal -->
-                                <td>{{ item.quantity }}</td>
+                                <td>
+                                    {{ item.quantity }}
+                                    
+                                </td>
+                                <!-- Remove button-->
+                                <td>
+                                    
+                                </td>
+                                
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -75,4 +90,3 @@
     </div>
 </section>
 {% endblock %}
-

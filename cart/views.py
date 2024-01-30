@@ -3,10 +3,10 @@ from store.models import Product
 from .models import Comment
 from django.contrib import messages
 from .forms import CommentForm
-
-
-def cart_summary(request):
-    return render(request, 'cart_summary.html')
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .cart import Cart
+from django.views.decorators.http import require_POST
 
 def cart_add(request, item_id):
     product = get_object_or_404(Product, pk=item_id)
@@ -25,6 +25,47 @@ def cart_add(request, item_id):
     
     request.session['cart'] = cart
     return redirect(redirect_url)
+
+def cart_summary(request):
+	# Get the cart
+	cart = Cart(request)
+	cart_products = cart.get_products
+	quantities = cart.get_quants
+	totals = cart.cart_total()
+	return render(request, "cart_summary.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals})
+
+def cart_delete(request, item_id):
+    """Remove the item from the shopping cart"""
+    try:
+        product = get_object_or_404(Product, pk=item_id)
+
+        cart.pop(item_id)
+        messages.success(request, f'Removed {product.name} from your cart')
+
+        request.session['cart'] = cart
+        return HttpResponse(status=200)
+    except Exception as e:
+        messages.error(request, f'Error removing item: {e}')
+        return HttpResponse(status=500)
+
+@require_POST
+def cart_update(request, item_id):
+   # Obtener los datos del formulario AJAX
+    item_id = request.POST.get('item_id')
+    new_quantity = request.POST.get('new_quantity')
+
+    # Actualizar la cantidad del artículo en el carrito
+    try:
+        cart_item = Product.objects.get(id=item_id)
+        cart_item.quantity = new_quantity
+        cart_item.save()
+        data = {'success': True, 'message': 'Quantity updated successfully.'}
+    except Product.DoesNotExist:
+        data = {'success': False, 'message': 'CartItem does not exist.'}
+    except Exception as e:
+        data = {'success': False, 'message': str(e)}
+
+    return JsonResponse(data)
 
 # Product       
 def product_detail(request,pk):
@@ -72,3 +113,4 @@ def edit_comment(request, comment_id):
     else:
         messages.error(request, "You must be logged in to see this page.")
         return redirect('home')
+
