@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY','test')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-jpsantostefa-musicstore-bmej8g1kgo9.ws-eu108.gitpod.io','8000-jpsantostefa-musicstore-bmej8g1kgo9.ws-us107.gitpod.io','localhost','https://music-store-dublin-13d1f2aca62d.herokuapp.com/']
+ALLOWED_HOSTS = ['8000-jpsantostefa-musicstore-bmej8g1kgo9.ws-eu108.gitpod.io','8000-jpsantostefa-musicstore-bmej8g1kgo9.ws-us107.gitpod.io','localhost','music-store-dublin-13d1f2aca62d.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-jpsantostefa-musicstore-bmej8g1kgo9.ws-eu108.gitpod.io','https://8000-jpsantostefa-musicstore-bmej8g1kgo9.ws-us107.gitpod.io'
