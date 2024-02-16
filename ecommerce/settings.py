@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+import dj_database_url
 from pathlib import Path
 
 
@@ -24,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-k!c+x*32j#^sa+u!*8pc^k2m8&v2r1)neth^kvlm@%o((q!oex'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['8000-jpsantostefa-musicstore-w6g59ejqk54.ws-us107.gitpod.io',]
+ALLOWED_HOSTS = ['8000-jpsantostefa-musicstore-bmej8g1kgo9.ws-eu108.gitpod.io','8000-jpsantostefa-musicstore-bmej8g1kgo9.ws-us107.gitpod.io','localhost','music-store-dublin.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-jpsantostefa-musicstore-w6g59ejqk54.ws-us107.gitpod.io',
+    'https://8000-jpsantostefa-musicstore-bmej8g1kgo9.ws-eu108.gitpod.io','https://8000-jpsantostefa-musicstore-bmej8g1kgo9.ws-us107.gitpod.io'
 ]
 
 # Application definition
@@ -128,12 +129,17 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default':dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation

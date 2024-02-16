@@ -3,15 +3,9 @@ from store.models import Product
 class Cart():
     def __init__(self, request):
         self.session = request.session
-
-        # Get the current session key if it exists
-        cart = self.session.get('session_key')
-
-        if 'session_key' not in request.session:
-            cart = self.session['session_key'] = {}
-
-        # This makes the cart be available on all pages of site
+        cart = self.session.get('session_key', {})
         self.cart = cart
+        
 
     def add(self, product, quantity):
         product_id = str(product.id)
@@ -72,10 +66,15 @@ class Cart():
         thing = self.cart
         return thing
 
-    def delete(self, product):
-        product_id = str(product)
-	    # Delete from dictionary/cart
+    def remove(self, product):
+        """
+        Remove a product from the cart.
+        """
+        product_id = str(product.id)
         if product_id in self.cart:
             del self.cart[product_id]
-
+            self.save()
+    
+    def save(self):
+        # Guardar el carrito en la sesión o base de datos
         self.session.modified = True

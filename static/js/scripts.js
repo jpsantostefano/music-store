@@ -80,23 +80,56 @@ $(document).on('click', '.update-cart', function(e){
 
 // Delete Item From Cart
 
-// Remove item and reload on click
-$('.remove-item').click(function(e) {
-    var csrfToken = "{{ csrf_token }}";
-    var itemId = $(this).attr('id').split('remove_')[1];
-    var url = `/cart/remove/${itemId}/`;
-    var data = {'csrfmiddlewaretoken': csrfToken};
+$(document).ready(function() {
+    $('.remove-item-btn').click(function(e) {
+        e.preventDefault();
+        var itemId = $(this).data('item_id');
+        console.log("Intentando eliminar el ítem con ID:", itemId); // Depuración: Imprime el ID del ítem a eliminar
 
-    $.post(url, data)
-     .done(function() {
-         location.reload();
-     });
-})
+        var url = `/cart/remove/${itemId}/`; // Asegúrate de que esta URL sea correcta
+        var csrfToken = getCookie('csrftoken'); // Función para obtener el token CSRF
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': csrfToken,
+                'item_id': itemId
+            },
+            success: function(response) {
+                console.log("Respuesta del servidor:", response); // Depuración: Imprime la respuesta del servidor
+                if(response.deleted){
+                    // Elimina la fila del ítem de la tabla
+                    $(`#item-row-${itemId}`).remove();
+                    // Actualiza información como el total, etc.
+                    console.log("Ítem eliminado del DOM con ID:", itemId); // Depuración: Confirma la eliminación en el DOM
+                }
+            },
+            error: function(xhr, status, error) {
+                // Manejo de errores
+                console.error("Error en la solicitud AJAX:", status, error);
+            }
+        });
+    });
+});
+
+// Función para obtener el valor de una cookie por nombre
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 
 
 //Update
-$('.update-link').click(function(e)) {
-    var form = $(this).prev('update-form');
-    form.submit();
-}
 

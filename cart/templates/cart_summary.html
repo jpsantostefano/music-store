@@ -27,8 +27,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <form action="{% url 'cart_delete' item.item_id %}" method="post">
+                            {% csrf_token %}
                         {% for item in cart_items %}
-                            <tr> 
+                            <tr id="item-row-{{ item.item_id }}"> 
                                 <!-- Product Image -->
                                 <td>
                                     <img src="{{ item.product.image.url }}" width="100px" height="100px" alt="Product Image">
@@ -60,21 +62,21 @@
                                     <i class="fas fa-plus"></i>
                                     </button>
                                     <!--Remove-->
-                                    <a class="btn btn-danger remove-item-btn" id="remove_{{ item.item_id }}">Remove</a>
+                                    
+                                        
+                                        <a class="btn btn-danger remove-item-btn" data-item_id="{{ item.item_id }}">Remove</a>
                                     
                                 </td>
                                 <!-- Subtotal -->
                                 <td>
                                     {{ item.quantity }}
-                                    
-                                </td>
-                                <!-- Remove button-->
-                                <td>
+                            
                                     
                                 </td>
                                 
                             </tr>
                         {% endfor %}
+                    </form>
                     </tbody>
                 </table>
             </div>

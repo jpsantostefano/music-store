@@ -34,19 +34,14 @@ def cart_summary(request):
 	totals = cart.cart_total()
 	return render(request, "cart_summary.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals})
 
+@require_POST
 def cart_delete(request, item_id):
-    """Remove the item from the shopping cart"""
-    try:
-        product = get_object_or_404(Product, pk=item_id)
-
-        cart.pop(item_id)
-        messages.success(request, f'Removed {product.name} from your cart')
-
-        request.session['cart'] = cart
-        return HttpResponse(status=200)
-    except Exception as e:
-        messages.error(request, f'Error removing item: {e}')
-        return HttpResponse(status=500)
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=item_id)
+    cart.remove(product)
+    request.session['session_key'] = cart.cart  # Actualizar manualmente la sesión
+    request.session.modified = True  # Marcar la sesión como modificada
+    return JsonResponse({'deleted': True})
 
 @require_POST
 def cart_update(request, item_id):

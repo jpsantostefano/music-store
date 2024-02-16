@@ -4,6 +4,7 @@ cachetools==5.3.2
 click==7.1.2
 crispy-bootstrap4==2023.1
 crispy-bootstrap5==2023.10
+dj-database-url==0.5.0
 Django==5.0.1
 django-allauth==0.60.0
 django-bootstrap==0.2.4
@@ -16,10 +17,12 @@ docopt==0.6.2
 fontawesome==5.10.1.post1
 GitPython==3.1.7
 google-auth==2.26.2
+gunicorn==21.2.0
 kubernetes==11.0.0
 oauthlib==3.2.2
 pillow==10.2.0
 popper==2020.9.1
+psycopg2==2.9.9
 pyasn1==0.5.1
 pyasn1-modules==0.3.0
 PyJWT==2.8.0
